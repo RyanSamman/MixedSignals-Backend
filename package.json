@@ -1,0 +1,38 @@
+{
+  "name": "mixedsignals-backend",
+  "version": "0.1.0",
+  "description": "The backend express server of Mixed Signals",
+  "main": "index.js",
+  "scripts": {
+    "express": "nodemon src/index.js",
+    "lint": "npx eslint .",
+    "linterrors": "npx eslint . --quiet",
+    "lintfix": "npx eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanSamman/MixedSignals-Backend.git"
+  },
+  "author": "RyanSamman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RyanSamman/MixedSignals-Backend/issues"
+  },
+  "homepage": "https://github.com/RyanSamman/MixedSignals-Backend#readme",
+  "dependencies": {
+    "alphavantage": "^2.0.1",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.16",
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
