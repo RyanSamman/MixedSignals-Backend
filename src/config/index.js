@@ -9,35 +9,17 @@ const envFound = dotenv.config(/* {path: ".env"} */);
 
 // Check if .env file exists and has been loaded
 if (envFound.error) {
-  throw new Error(chalk.bgRed.black(
-    '\'.env\' HAS NOT BEEN FOUND!',
-  ));
+  throw new Error(chalk.bgRed.black('\'.env\' HAS NOT BEEN FOUND!'));
 }
 
-let notFound = false;
+// Ensure required env variables are present
+const requiredEnvVariables = [process.env.API_KEY, process.env.MONGO_URI];
 
-// Check if MongoURI and API key exist
-if (!process.env.API_KEY) {
-  notFound = true;
-  console.log(chalk.bgRed.black(
-    'ALPHAVANTAGE API_KEY HAS NOT BEEN FOUND IN .env',
-  ));
-}
-
-if (!process.env.MONGO_URI) {
-  notFound = true;
-  console.log(chalk.bgRed.black(
-    'MONGO_URI HAS NOT BEEN FOUND IN .env',
-  ));
-}
-
-if (notFound) {
-  throw new Error(chalk.bgRed.black(
-    'Required .env Variables have not been found.',
-  ));
-}
-
-// : process.env.VARIABLE ||
+requiredEnvVariables.forEach((envVar) => {
+  if (typeof envVar === 'undefined') {
+    throw new Error(chalk.bgRed.black('Required .env Variables have not been found.'));
+  }
+});
 
 const config = {
   // AlphaVantage API Key
