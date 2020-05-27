@@ -7,7 +7,11 @@ const config = require('../config');
 
 // Loading Database & Recording time taken to load
 console.time('Time taken to load the database:');
-mongoose.connect(config.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+})
   .catch((err) => {
     console.error(err.reason);
     throw err;
