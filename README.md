@@ -1,105 +1,56 @@
-# **IMPORTANT** 
-# Steps to begin developing:
+# Contents
+- [Steps to begin Development](#Steps-to-begin-developing)
+- [Starting the Express Server](#Starting-the-Express-Server)
+- [Linting](#Linting)
 
-First of all, to ensure you are using the the most recent node_packages:
+# Steps to begin developing
+
+## Install the required `node_modules`
 
 `npm install`
 
-Then go to [Alphavantage](https://www.alphavantage.co/support/#api-key) and get your own API key for use in the project
+## Configure the Enviroment Variables
 
+- Copy the file `.env.example`:
+- Rename the copy to `.env`
+- Fill out the required varibles
 
-Edit the file `.env.example`:
 ```
 API_KEY="<API-KEY>"
+
 MONGO_URI="mongodb+srv://<USERNAME>:<PASSWORD>@mixedsignals-s6wpf.mongodb.net/test?retryWrites=true&w=majority"
 
 ```
-Replace `<API-KEY>` with your AlphaVantage API Key, `<USERNAME>` and `<PASSWORD>`
- with your MongoDB user information.
- 
-Then, rename `.env.example` to `.env`
-```
-API_KEY="<API-KEY>"
-MONGO_URI="mongodb+srv://<USERNAME>:<PASSWORD>@mixedsignals-s6wpf.mongodb.net/test?retryWrites=true&w=majority"
 
-```
-Replace `<API-KEY>` with your AlphaVantage API Key, `<USERNAME>` and `<PASSWORD>`
- with your MongoDB user information.
+Replace `<API-KEY>` with your [AlphaVantage API Key](https://www.alphavantage.co/support/#api-key)
+, `<USERNAME>` and `<PASSWORD>`
+with your MongoDB user information.
 
 # Starting the Express Server
 
-```npm express``` 
+Use the command `npm run server` to start the server
 
-Alternatively, if you want the server to reboot every time you save, try out [Nodemon](https://nodemon.io/)
+⚠ With `nodemon`, it will cause the server to automatically restart upon saving or crash 
 
-```nodemon npm express```
+# Linting
 
-# React/Webpack Server
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Display warnings and Errors:
+```npm run lint```
 
-## Available Scripts
+Display errors only
+```npm run linterrors```
 
-In the project directory, you can run:
+Automatically fix all errors and warnings
+```npm run lintfix```
 
-### `npm start`
+## Linting Configuration:
+- Tabs instead of spaces; **Make sure to change this in your code editor**
+- Single quotation marks `'` Instead of `"` for Strings
+- Semicolons
+- `CRLF` line endings
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Why this configuration?
+- You can change how tabs are represented in your code editor to display as 2 spaces or 4 spaces
+- Git automatically changes Unix's `LF` line endings to `CRLF`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Back to the top](#Contents)
