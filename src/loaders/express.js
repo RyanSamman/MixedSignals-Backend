@@ -26,8 +26,8 @@ app.use(cookieParser());
 
 // TODO: Create Logger to log all requests instead of printing to console
 app.use((req, res, next) => {
-  console.log(chalk.bgBlue.black(`Method: ${req.method}; Path: ${req.path}; IP: ${req.ip}`));
-  next();
+	console.log(chalk.bgBlue.black(`Method: ${req.method}; Path: ${req.path}; IP: ${req.ip}`));
+	next();
 });
 
 // ⚠ SERVER WILL ONLY HANDLE BACKEND APIs, the Webpack Dev Server Handles Frontend ⚠

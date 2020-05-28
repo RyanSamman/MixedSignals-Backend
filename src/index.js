@@ -8,8 +8,8 @@ console.log('Config Files Loaded!:\n', config);
 
 // Throws error if any occur uncaught inside a promise
 process.on('unhandledRejection', (err) => {
-  console.error(chalk.bgRed.black('⚠ Unhandled Rejection was not caught:\n', err));
-  throw err;
+	console.error(chalk.bgRed.black('⚠ Unhandled Rejection was not caught:\n', err));
+	throw err;
 });
 
 // Load Database

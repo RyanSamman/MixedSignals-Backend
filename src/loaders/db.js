@@ -8,14 +8,14 @@ const config = require('../config');
 // Loading Database & Recording time taken to load
 console.time('Time taken to load the database:');
 mongoose.connect(config.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
 })
-  .catch((err) => {
-    console.error(err.reason);
-    throw err;
-  });
+	.catch((err) => {
+		console.error(err.reason);
+		throw err;
+	});
 
 const db = mongoose.connection;
 
@@ -23,8 +23,8 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, (err) => `connection error:, ${err.reason}`));
 
 db.once('open', () => {
-  // TODO: Add to logger & port timer to logger
-  console.log('Connected to database');
-  console.timeEnd('Time taken to load the database:');
-  module.exports = db;
+	// TODO: Add to logger & port timer to logger
+	console.log('Connected to database');
+	console.timeEnd('Time taken to load the database:');
+	module.exports = db;
 });
