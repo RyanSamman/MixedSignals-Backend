@@ -1,5 +1,5 @@
 const UserModel = require('./../models/Users');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 const users = [
 	{
@@ -32,15 +32,16 @@ class UserService {
 		};
 	}
 
-	async authenticate(username, password) {
-		UserModel.findOne({username: username}, (err, data) =>{
+	async authenticate(username/*, password*/) {
+		UserModel.findOne({username: username}, (err, /*data*/) =>{
 			if (err) return err;
-			//bcrypt.compare()
-		})
+			//bcrypt.compare(password,)
+
+		});
 	}
 	
 	async deleteUser(username, password) {
-
+		return {username, password};
 	}
 
 	async test(username='', password='') {
