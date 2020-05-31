@@ -11,6 +11,7 @@ mongoose.connect(config.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true,
+	dbName: config.DB_NAME,
 })
 	.catch((err) => {
 		console.error(err.reason);
