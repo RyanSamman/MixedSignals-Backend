@@ -29,6 +29,9 @@ const config = {
 	// MongoDB URI
 	MONGO_URI: process.env.MONGO_URI,
 
+	// Database Name
+	DB_NAME: process.env.DB_NAME,
+
 	// .env is default, fall back to port 5000 if not specified
 	PORT: process.env.PORT || 5000,
 
