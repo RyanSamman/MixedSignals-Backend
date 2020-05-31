@@ -1,14 +1,11 @@
 const express = require('express');
-
 const app = express();
+const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 
 // Health Check API
-// https://www.ibm.com/garage/method/practices/manage/health-check-apis/
-// Standard is to return the current status and (optional) JSON body
-// TODO: move to promise checking status of database?
 app.get('/status', (req, res) => res.status(200).json({ status: '200' }));
 app.head('/status', (req, res) => res.status(200).end());
 
@@ -30,18 +27,15 @@ app.use((req, res, next) => {
 	next();
 });
 
-// ⚠ SERVER WILL ONLY HANDLE BACKEND APIs, the Webpack Dev Server Handles Frontend ⚠
-/*
 // serve static files (for CSS, pictures, etc)
 app.use(express.static(path.join(__dirname, 'public')));
-*/
 
 /* ~~~~~~~~~~~~~~~~~~~~~ Express Routes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // User routes
-app.use('/api/users', require('../api/users'));
+app.use('/api/users', require('../api/userRoutes'));
 
 // Stocks routes
-app.use('/api/stocks', require('../api/stocks'));
+app.use('/api/stocks', require('../api/stockRoutes'));
 
 module.exports = app;
