@@ -1,5 +1,6 @@
 # Install the REST client in Visual Studio Code to Send Requests with this file;
 # Alternatively, you can use Postman to send requests
+# TODO: Introduce variables
 
 # Healthcheck
 GET http://localhost:5000/status
@@ -9,14 +10,41 @@ GET http://localhost:5000/status
 #~~~~~~~~~~~~~~~~~ USERS ~~~~~~~~~~~~~~~~~
 
 ###
-
-POST http://localhost:5000/api/users/login HTTP/1.1
+# Registration
+POST http://localhost:5000/api/users/register HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
-name=foo
-&password=bar
+email=foo@hotmail.com
+&password=bar123
 
 ### 
+# Login
+GET http://localhost:5000/api/users/login
+	?email=foo@hotmail.com
+	&password=bar123
+
+###
+# Update Name
+PUT http://localhost:5000/api/users/name
+Content-Type: application/json
+
+{
+	"email": "foo@hotmail.com",
+	"name": "FooBar"
+}
+
+###
+# Delete user
+
+DELETE http://localhost:5000/api/users/delete
+Content-Type: application/json
+
+{
+	"email": "foo@hotmail.com"
+}
+
+
+# ~~~~~~~~~~~~~~ STOCKS ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Find a certain stock
 GET http://localhost:5000/api/stocks/msft
