@@ -30,7 +30,10 @@ const config = {
 	MONGO_URI: process.env.MONGO_URI,
 
 	// Database Name
-	DB_NAME: process.env.DB_NAME,
+	DB_NAME: process.env.DB_NAME || 'MixedSignals',
+
+	// Testing Database Name
+	TEST_DB_NAME: process.env.TEST_DB_NAME || 'UnitTesting',
 
 	// .env is default, fall back to port 5000 if not specified
 	PORT: process.env.PORT || 5000,

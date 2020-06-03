@@ -63,6 +63,7 @@ class UserService {
 	}
 
 	async queryUsers({email, name, preferences})  {
+		// WIP
 		let response = await UserModel.find({email, name, preferences}, (err, users) =>{
 			if (err) return {'status': 501, err};
 			return {'status': 200, 'data': users};
@@ -77,7 +78,6 @@ class UserService {
 			if (err) return {'status': 500, err};
 			return {'status': 200, 'message': userList};
 		});
-		console.log(response);
 		return response;
 	}
 

@@ -29,5 +29,15 @@
             "error",
             "always"
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "test/*"
+            ], // Or *.test.js
+            "rules": {
+                "no-unused-vars": "off"
+            }
+        }
+    ]
 }
