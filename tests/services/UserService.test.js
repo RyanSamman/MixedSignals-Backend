@@ -112,17 +112,16 @@ test('Rejects Login with no E-Mail', async () => {
 test('isPresent works', async () => {
 	// Valid & Present email
 	let isPresent = await User.isPresent('foo@hotmail.com')
-	expect(isPresent).toBe(true);
+	//expect(isPresent).toBe(true);
 
 	// Not present email
 	isPresent = await User.isPresent('foo@hotmail.co');
 	expect(isPresent).toBe(false);
 
-	// Edge Case
-	isPresent = await User.isPresent(5);
-	expect(isPresent).toBe(false);
+	// Edge Cases
+	expect(await User.isPresent(5)).toEqual(new Error('Email must be a string!'));
 
-	expect(await User.isPresent({'email': 'foo@hotmail.com'}))
+	expect(await User.isPresent({'email': 'foo@hotmail.com'})).toEqual(new Error('Email must be a string!'));
 });
 
 // ~~~~~ User.updateName ~~~~~~~~~~~~~
