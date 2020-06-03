@@ -3,23 +3,18 @@ const bcrypt = require('bcrypt');
 
 class UserService {
 	async createUser({email='', name='', password=''} = {}) {
-		if (password.length < 6) return {'status': 400, 'message': 'Invalid Password'};
+		if (password.length < 6) return {'status': 400, 'Error': 'Invalid Password'};
 		const passwordHash = await bcrypt.hash(password.trim(), 10);
 
 		try {
 			let NewUser = await UserModel.create({email, name, passwordHash});
-			return {'status': 201, 'data': NewUser};
-
+			return {'status': 201, 'Data': NewUser};
 		} catch (err) {
-			console.log(`Error '${err.name}' while Creating User:\n`, err);
-			if (err.name === 'MongoError') {
-				return {'status': 400, 'Error': 'E-Mail is already registered'};
-			} else if (err.name === 'ValidationError') {
-				return {'status': 400, 'Error': 'Fill in the required Fields'};
-			} else {
-				console.log('WARNING: UNKNOWN ERROR');
-				return {'status': 500, 'Error': 'Unknown Error'};
-			}
+			//console.log(`Error '${err.name}' while Creating User:\n`, err);
+			let error = err.name;
+			if (err.name === 'MongoError') error = 'E-Mail is already registered';
+			if (err.name === 'ValidationError') error = 'Fill in the required Fields';
+			return {'status': 400, 'Error': error};
 		}
 	}
 
@@ -39,30 +34,27 @@ class UserService {
 	 * @param {string} email E-Mail to check if present
 	 * @returns {boolean} True if Present; False if no match
 	 */
-	async isPresent(email) {
+	async isPresent(email='') {
+		if (typeof(email) !== 'string') return new Error('Email must be a string!');
 		let dataPresent = await UserModel.findOne({email});
 		if (dataPresent) return true;
 		return false;
 	}
 
 	async updateName({email='', name=''} = {}) {
+		if (!(email && (name.length >= 3))) return {'status': 400 };
 		let user = await UserModel.findOne({email});
-		console.log(user);
-		if (!user) return {'status': 404, 'message': 'User Not Found'};
-
-		// TODO: Test for ideal username
+		if (!user) return {'status': 404};
 		user.name = name;
 		let updatedUser = await user.save();
 		return {'status': 200, updatedUser};
 	}
 
 	async deleteUser({email=''} = {}) {
-		// Will Require Authorization
+		if (!email) return {'status': 400};
 		let deletedUser = await UserModel.deleteOne({email});
-		if (deletedUser.deletedCount === 0) return {'status': 404, 'message': 'User Not Found'};
-
-		// TODO: Remove response, send 204
-		return {'status': 200, 'deleteInfo': deletedUser };
+		if (deletedUser.deletedCount === 0) return {'status': 404};
+		return {'status': 204};
 	}
 
 	async recoverUser({email}) {
@@ -95,41 +87,11 @@ class UserService {
 			if (err) return {'status': 500, err};
 			return { 'status': 200, usersDeleted };
 		});
-
-		console.log(response);
-
 		return response;
 	}
 }
 
 module.exports = UserService;
-
-async function main() {
-	const User = new UserService();
-	let obj = {};
-
-	//obj = await UserModel.deleteOne({'email': 'foo@hotmail.com'});
-	//console.log(obj);
-
-	//obj = await User.updateName({'email': 'foo@hotmail.com', 'name': 'FooBar'});
-	//console.log(obj);
-
-	//obj = await User.createUser({email: 'RyanSamman@outlook.com', password: 'Abc123'});
-	//console.log(obj);
-
-	//obj = await User.isPresent('RyanSamman@outlook.com');
-	//console.log(obj);
-
-	//obj = await User.login({email: 'RyanSamman@outlook.com', password: 'Abc123'});
-	//console.log(obj);
-
-	//obj = await User.findAllUsers();
-	//console.log('All Users:\n', obj);
-
-	//await User.deleteAllUsers();
-}
-
-main();
 
 // https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
 // ~~~~~ How to design a good Login/Authentication system ~~~~
