@@ -9,7 +9,7 @@ const envFound = dotenv.config(/* {path: ".env"} */);
 
 // Check if .env file exists and has been loaded
 if (envFound.error) {
-	throw new Error(chalk.bgRed.black('\'.env\' HAS NOT BEEN FOUND!'));
+	console.log(chalk.bgRed.black('\'.env\' HAS NOT BEEN FOUND!'));
 }
 
 //TODO: Add Regex to match each one
