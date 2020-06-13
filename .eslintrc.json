@@ -13,31 +13,43 @@
         "ecmaVersion": 11
     },
     "rules": {
+        "no-unused-vars": "warn",
         "indent": [
             "error",
             "tab"
         ],
         "linebreak-style": [
-            "error",
+            "warn",
             "windows"
         ],
         "quotes": [
-            "error",
+            "warn",
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
-        ]
-    },
-    "overrides": [
-        {
-            "files": [
-                "test/*"
-            ], // Or *.test.js
-            "rules": {
-                "no-unused-vars": "off"
-            }
-        }
-    ]
+        ],
+        "object-curly-spacing": [
+            "warn",
+            "always"
+        ],
+        "no-implied-eval": "error",
+        // Prohibit use of == and != in favor of === and !==.
+        "eqeqeq": "warn",
+        // Suppress warnings about == null comparisons.
+        "no-eq-null": "error",
+        // Prohibit use of a variable before it is defined.
+        "no-undef": "error"
+    }
+    // "overrides": [
+    //     {
+    //         "files": [
+    //             "test/*"
+    //         ], // Or *.test.js
+    //         "rules": {
+    //             "no-unused-vars": "off"
+    //         }
+    //     }
+    // ]
 }
