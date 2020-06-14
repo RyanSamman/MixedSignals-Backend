@@ -9,6 +9,9 @@ GET http://localhost:5000/status
 
 #~~~~~~~~~~~~~~~~~ USERS ~~~~~~~~~~~~~~~~~
 
+# Query All Stocks/Crypto
+GET http://localhost:5000/api/stocks/list
+
 ###
 # Registration
 POST http://localhost:5000/api/users/register HTTP/1.1
@@ -35,7 +38,6 @@ Content-Type: application/json
 
 ###
 # Delete user
-
 DELETE http://localhost:5000/api/users/delete
 Content-Type: application/json
 
@@ -43,9 +45,67 @@ Content-Type: application/json
 	"email": "foo@hotmail.com"
 }
 
-
+###
 # ~~~~~~~~~~~~~~ STOCKS ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Find a certain stock
-GET http://localhost:5000/api/stocks/msft
+# Create Stock
+POST http://localhost:5000/api/stocks/create
+Content-Type: application/json
 
+{
+	"name": "MSFT",
+	"type": "stock"
+}
+
+###
+
+# Create Crypto
+POST http://localhost:5000/api/stocks/create
+Content-Type: application/json
+
+{
+	"name": "BTC",
+	"type": "crypto"
+}
+
+###
+
+# Get Stock
+GET http://localhost:5000/api/stocks/get
+Content-Type: application/json
+
+{
+	"name": "MSFT",
+	"type": "stock"
+}
+
+###
+
+# Get Crypto
+GET http://localhost:5000/api/stocks/get
+Content-Type: application/json
+
+{
+	"name": "BTC",
+	"type": "crypto"
+}
+
+###
+
+PUT http://localhost:5000/api/stocks/update
+Content-Type: application/json
+
+{
+	"name": "MSFT",
+	"type": "stock"
+}
+
+###
+
+PUT http://localhost:5000/api/stocks/update
+Content-Type: application/json
+
+{
+	"name": "BTC",
+	"type": "crypto"
+}
