@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const mongoose = require('mongoose');
 
-async function loadDatabase({MONGO_URI, DB_NAME}) {
+async function loadDatabase({ MONGO_URI, DB_NAME }) {
 	let initialTime = new Date();
 	try {
 		await mongoose.connect(MONGO_URI, {
@@ -34,7 +34,7 @@ async function loadDatabase({MONGO_URI, DB_NAME}) {
 	// Do a task once connection has opened
 	//connection.once('open', () => {})
 	let timeToConnect = (new Date() - initialTime)/1000;
-	return {timeToConnect, connection};
+	return { timeToConnect, connection };
 }
 
 module.exports = loadDatabase;

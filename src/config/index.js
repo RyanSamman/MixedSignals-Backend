@@ -12,8 +12,6 @@ if (envFound.error) {
 	console.log(chalk.bgRed.black('\'.env\' HAS NOT BEEN FOUND!'));
 }
 
-//TODO: Add Regex to match each one
-// Ensure required env variables are present
 const requiredEnvVariables = [process.env.API_KEY, process.env.MONGO_URI];
 
 requiredEnvVariables.forEach((envVar) => {

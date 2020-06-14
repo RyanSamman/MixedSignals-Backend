@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-// User (_S)chemata
-
-// Nested in User_S to be able to change more easily
-// TODO: Refine NewsPreferences schema
 const schemaNewsPreference = new Schema({
 	type: String,
 	subtypes: [String],
