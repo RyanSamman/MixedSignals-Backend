@@ -1,32 +1,36 @@
-const UserModel = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 
-class UserService {
-	async createUser({email='', name='', password=''} = {}) {
-		if (password.length < 6) return {'status': 400, 'Error': 'Invalid Password'};
-		const passwordHash = await bcrypt.hash(password.trim(), 10);
+const UserModel = require('../../models/UserModel');
 
+// TODO: getUserData method
+
+class UserService {
+	async createUser({ email='', name='', password='' } = {}) {
+		if (password.length < 6) return { 'status': 400, 'error': 'Invalid Password' };
+		const passwordHash = await bcrypt.hash(password.trim(), 10);
 		try {
-			let NewUser = await UserModel.create({email, name, passwordHash});
-			return {'status': 201, 'Data': NewUser};
+			let NewUser = await UserModel.create({ email, name, passwordHash });
+			return { 'status': 201, 'data': NewUser };
 		} catch (err) {
-			//console.log(`Error '${err.name}' while Creating User:\n`, err);
 			let error = err.name;
+			// Duplicate E-Mail (or any other field)
 			if (err.name === 'MongoError') error = 'E-Mail is already registered';
+			// Required fields missing
 			if (err.name === 'ValidationError') error = 'Fill in the required Fields';
-			return {'status': 400, 'Error': error};
+			return { 'status': 400, 'error': error };
 		}
 	}
 
-	async login({email='', password=''} = {}) {
-		let userData = await UserModel.findOne({email: email});
-		if (!userData) return {'status': 404, 'message': 'User Not Found'};
+	async login({ email='', password='' } = {}) {
+		let userData = await UserModel.findOne({ email });
+		// TODO
+		// if (!userData.verified) return { 'status': 403, 'error': 'Not Verified' };
+		if (!userData) return { 'status': 404, 'error': 'User Not Found' };
 		let isCorrectPassword = await bcrypt.compare(password.trim(), userData.passwordHash);
-
 		if (isCorrectPassword) {
-			return {'status': 200, 'message': 'Successful Login', userData};
+			return { 'status': 200, 'message': 'Successful Login', 'data': userData };
 		}
-		return {'status': 401, 'message': 'Unsuccessful Login'};
+		return { 'status': 401, 'error': 'Unsuccessful Login' };
 	}
 
 	/**
@@ -35,59 +39,42 @@ class UserService {
 	 * @returns {boolean} True if Present; False if no match
 	 */
 	async isPresent(email='') {
-		if (typeof(email) !== 'string') return new Error('Email must be a string!');
-		let dataPresent = await UserModel.findOne({email});
+		if (typeof(email) !== 'string') throw new Error('Email must be a string!');
+		let dataPresent = await UserModel.findOne({ email }).select({ '_id': 1 });
 		if (dataPresent) return true;
 		return false;
 	}
 
-	async updateName({email='', name=''} = {}) {
-		if (!(email && (name.length >= 3))) return {'status': 400 };
-		let user = await UserModel.findOne({email});
-		if (!user) return {'status': 404};
+	async updateName({ email='', name='' } = {}) {
+		if (!(email && (name.length >= 3) && !name.includes(' '))) return { 'status': 400 };
+		let user = await UserModel.findOne({ email });
+		if (!user) return { 'status': 404 };
 		user.name = name;
 		let updatedUser = await user.save();
-		return {'status': 200, updatedUser};
+		return { 'status': 200, 'data': updatedUser };
 	}
 
-	async deleteUser({email=''} = {}) {
-		if (!email) return {'status': 400};
-		let deletedUser = await UserModel.deleteOne({email});
-		if (deletedUser.deletedCount === 0) return {'status': 404};
-		return {'status': 204};
+	async deleteUser({ email='' } = {}) {
+		let deletedUser = await UserModel.deleteOne({ email });
+		if (deletedUser.deletedCount === 0) return { 'status': 404 };
+		return { 'status': 204 };
 	}
 
-	async recoverUser({email}) {
-		// WIP
-		return {'status': 501, 'message': {email}};
-	}
-
-	async queryUsers({email, name, preferences})  {
-		// WIP
-		let response = await UserModel.find({email, name, preferences}, (err, users) =>{
-			if (err) return {'status': 501, err};
-			return {'status': 200, 'data': users};
-		});
-		return response;
-	}
+	// async recoverUser({ email }) {
+	// 	// TODO - Create after E-Mail server & redis is setup
+	// 	return { 'status': 501, 'message': { email } };
+	// }
 
 	async findAllUsers() {
-		// TODO: Check if in Dev/CI Environment; Or Authorized/Admin User:
-		// if (process.env.DEV || process.env.CI) return {'status': 401};
-		let response = await UserModel.find({}, (err, userList) => {
-			if (err) return {'status': 500, err};
-			return {'status': 200, 'message': userList};
-		});
-		return response;
+		if (!(process.env.DEV || process.env.CI)) return { 'status': 401, 'message': 'Must be in a CI Environment!' };
+		let users = await UserModel.find();
+		return { 'status': 200, 'users': users };
 	}
 
 	async deleteAllUsers() {
-		// TODO: Authrization/Dev&CI env
-		let response = await UserModel.deleteMany({}, (err, usersDeleted) => {
-			if (err) return {'status': 500, err};
-			return { 'status': 200, usersDeleted };
-		});
-		return response;
+		if (!(process.env.DEV || process.env.CI)) return { 'status': 401, 'message': 'Must be in a CI Environment!' };
+		let deletedInfo = await UserModel.deleteMany();
+		return { 'status': 200, 'deletedCount': deletedInfo.n };
 	}
 }
 
