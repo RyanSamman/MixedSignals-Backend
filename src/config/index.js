@@ -12,7 +12,7 @@ if (envFound.error) {
 	console.log(chalk.bgRed.black('\'.env\' HAS NOT BEEN FOUND!'));
 }
 
-const requiredEnvVariables = [process.env.API_KEY, process.env.MONGO_URI];
+const requiredEnvVariables = [process.env.API_KEY, process.env.MONGO_URI, process.env.ACCESS_JWT_SECRET, process.env.REFRESH_TOKEN_SECRET];
 
 requiredEnvVariables.forEach((envVar) => {
 	if (typeof envVar === 'undefined') {
@@ -26,6 +26,12 @@ const config = {
 
 	// MongoDB URI
 	MONGO_URI: process.env.MONGO_URI,
+
+	// Secret to sign Access Tokens with 
+	ACCESS_JWT_SECRET: process.env.ACCESS_JWT_SECRET,
+
+	// Secret to sign Refresh Tokens with
+	REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
 
 	// Database Name
 	DB_NAME: process.env.DB_NAME || 'MixedSignals',
